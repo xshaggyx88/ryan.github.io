@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Select a Major</h1><br>
+    <button type="button" id="citBtn">CIT Majors</button>
+    <button type="button" id="busBtn">Business Majors</button><br>
+    <br><h2>We filter out dataset by major</h2>
+    <div id="result"></div>
+
+
+
+    <script>
+
+        document.querySelector("#citBtn").onclick = function() {
+            var request = new XMLHttpRequest();
+            request.open("GET", "cit5students.json");
+            request.onload = function() {
+                var data = JSON.parse(request.responseText);
+
+
+                data.sort(function(a, b) {
+                    let nameA = a.name.toUpperCase();
+                    let nameB = b.name.toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+
+                });
+                
+                if (request.status == 200){
+                    var contents = "<table cellspacing='5'><tr><td>Name</td><td>Major</td><td>Midterm</td><td>Final</td></tr>";
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].major == "CIT") {
+                            contents += "<tr><td>" + data[i].name + "</td><td>" + data[i].major + "</td><td>" + data[i].midterm + "</td><td>" + data[i].final + "</td></tr>";
+                        }
+                    
+                    }
+                    
+                    contents += "</table>";
+                    document.querySelector("#result").innerHTML = contents;
+
+                }
+                else{
+                    document.quearySelector("#result").innerHTML = "Error code: " + request.status;
+                }
+            }
+            request.send(null);
+        };
+        
+        document.querySelector("#busBtn").onclick = function() {
+            var request = new XMLHttpRequest();
+            request.open("GET", "cit5students.json");
+            request.onload = function() {
+                var data = JSON.parse(request.responseText);
+
+                data.sort(function(a, b) {
+                    let nameA = a.name.toUpperCase();
+                    let nameB = b.name.toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+
+                });
+                
+                if (request.status == 200){
+                    var contents = "<table cellspacing='5'><tr><td>Name</td><td>Major</td><td>Midterm</td><td>Final</td></tr>";
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].major == "BUS") {
+                            contents += "<tr><td>" + data[i].name + "</td><td>" + data[i].major + "</td><td>" + data[i].midterm + "</td><td>" + data[i].final + "</td></tr>";
+                        }
+                       
+                    }
+                    contents += "</table>";
+                    document.querySelector("#result").innerHTML = contents;
+
+                }
+                else{
+                    document.quearySelector("#result").innerHTML = "Error code: " + request.status;
+                }
+            }
+            request.send(null);
+        };
+
+
+
+
+
+    </script>
+    
+</body>
+</html>
